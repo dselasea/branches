@@ -18,23 +18,25 @@ function Weather() {
 
   useEffect(() => {
     fetch(
-      `http://api.weatherapi.com/v1/current.json?key=3865367567c643ad88e11112200910&q=${searchInput}`
+      `http://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=1b762a27694a99c88c292de5c5793d7d`
     )
       .then((response) => {
         if(response.status >= 200 && response.status <= 299){
-          response.json();
+          
+          return response.json()
         }else{
-          setLoader(false);
+          // setLoader(false);
           throw new Error(response.statusText)
         }
       })
       .then((data) => {
+        console.log(data)
         setWeatherNow(data);
         setLoader(false);
       })
       .catch(err => {console.log("Error Loading Data")
       });
-  }, []);
+  }, [searchInput]);
 
 
   function getWeatherInfo(e) {
@@ -44,10 +46,10 @@ function Weather() {
       setWeather((prevState) => {
         return {
           ...prevState,
-          location: weatherNow.location.country,
-          city: weatherNow.location.name,
-          condition: weatherNow.current.condition["text"],
-          icon: weatherNow.current.condition["icon"],
+          location: weatherNow.sys.country,
+          city: weatherNow.name,
+          condition: weatherNow.weather[0]["main"],
+          icon: weatherNow.weather[0]["icon"],
         };
       });
       // setLoader(true);
