@@ -56,12 +56,16 @@ function Weather() {
     e.preventDefault();
   }
 
+  function callData(){
+    setTimeout(getWeatherInfo, 3000);
+  }
+
 
   if(loader){
     return <div><h1>Loading...</h1></div>
   }
   if(isError){
-    return <div><h1>Error In Fetchin Data</h1></div>
+    return <div><h1 style={{color: "black"}}>Error In Fetchin Data</h1></div>
   }
   return (
     <div>
@@ -76,7 +80,7 @@ function Weather() {
           />
         </form>
         {searchInput === "" ? <p>Please enter a country</p> : null}
-        <button onClick={getWeatherInfo}>Search</button>
+        <button onClick={callData}>Search</button>
         <div className="weather-info">
           <div>
             <p>
