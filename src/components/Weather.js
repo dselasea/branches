@@ -5,7 +5,7 @@ function Weather() {
     location: "",
     city: "",
     condition: "",
-    icon: "https://cdn.weatherapi.com/weather/64x64/night/116.png",
+    icon: "",
   });
   const location = weather.location;
   const city = weather.city;
@@ -14,7 +14,6 @@ function Weather() {
   const [searchInput, setSearchInput] = useState("ghana");
   const [weatherNow, setWeatherNow] = useState([]);
   const [loader, setLoader] = useState(true);
-  const [isError, setIsError] = useState(false)
 
   useEffect(() => {
     fetch(
@@ -22,10 +21,9 @@ function Weather() {
     )
       .then((response) => {
         if(response.status >= 200 && response.status <= 299){
-          
           return response.json()
         }else{
-          // setLoader(false);
+          setLoader(false);
           throw new Error(response.statusText)
         }
       })
@@ -49,7 +47,7 @@ function Weather() {
           location: weatherNow.sys.country,
           city: weatherNow.name,
           condition: weatherNow.weather[0]["main"],
-          icon: weatherNow.weather[0]["icon"],
+          icon: "http://openweathermap.org/img/w/" +weatherNow.weather[0]["icon"] + ".png",
         };
       });
       // setLoader(true);
@@ -60,9 +58,6 @@ function Weather() {
 
   if(loader){
     return <div><h1>Loading...</h1></div>
-  }
-  if(isError){
-    return <div><h1 style={{color: "black"}}>Error In Fetchin Data</h1></div>
   }
   return (
     <div>
