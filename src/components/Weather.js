@@ -13,20 +13,32 @@ function Weather() {
   const icon = weather.icon;
   const [searchInput, setSearchInput] = useState("");
   const [weatherNow, setWeatherNow] = useState([]);
-  // const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     fetch(
       `http://api.weatherapi.com/v1/current.json?key=3865367567c643ad88e11112200910&q=${searchInput}`
     )
-      .then((response) => response.json())
-      .then((data) => setWeatherNow(data))
-      .catch(err => console.log("Error Display!"));
+      .then((response) => {
+        if(response.status >= 200 && response.status <= 299){
+          response.json();
+        }else{
+          setLoader(false);
+          setIsError(true);
+          throw new Error(response.statusText)
+        }
+      })
+      .then((data) => {
+        setWeatherNow(data);
+        setLoader(false);
+      })
+      .catch(err => {console.log("Error Loading Data")
+      });
   }, [searchInput]);
 
 
   function getWeatherInfo(e) {
-    console.log(searchInput);
     if (searchInput === "") {
       console.log("Empty");
     } else {
@@ -44,6 +56,13 @@ function Weather() {
     e.preventDefault();
   }
 
+
+  if(loader){
+    return <div><h1>Loading...</h1></div>
+  }
+  if(isError){
+    return <div><h1>Error In Fetchin Data</h1></div>
+  }
   return (
     <div>
       <h1>Weather App</h1>

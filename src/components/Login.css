@@ -5,8 +5,9 @@
 }
 
 .main-container {
-  background: url(https://image.freepik.com/free-vector/gorgeous-clouds-background-with-blue-sky-design_1017-25501.jpg)
+  background: url(https://image.freepik.com/free-vector/desert-landscape-background-video-conferencing_23-2148653741.jpg)
     no-repeat center center/cover;
+  background-position: fixed;
 }
 
 .form-container {
