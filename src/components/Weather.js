@@ -11,10 +11,10 @@ function Weather() {
   const city = weather.city;
   const condition = weather.condition;
   const icon = weather.icon;
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState("ghana");
   const [weatherNow, setWeatherNow] = useState([]);
   const [loader, setLoader] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState(false)
 
   useEffect(() => {
     fetch(
@@ -34,7 +34,7 @@ function Weather() {
       })
       .catch(err => {console.log("Error Loading Data")
       });
-  }, [searchInput]);
+  }, []);
 
 
   function getWeatherInfo(e) {
@@ -53,10 +53,6 @@ function Weather() {
       // setLoader(true);
     }
     e.preventDefault();
-  }
-
-  function callData(){
-    setTimeout(getWeatherInfo, 5000);
   }
 
 
