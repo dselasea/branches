@@ -25,7 +25,6 @@ function Weather() {
           response.json();
         }else{
           setLoader(false);
-          setIsError(true);
           throw new Error(response.statusText)
         }
       })
@@ -57,7 +56,7 @@ function Weather() {
   }
 
   function callData(){
-    setTimeout(getWeatherInfo, 3000);
+    setTimeout(getWeatherInfo, 5000);
   }
 
 
@@ -80,7 +79,7 @@ function Weather() {
           />
         </form>
         {searchInput === "" ? <p>Please enter a country</p> : null}
-        <button onClick={callData}>Search</button>
+        <button onClick={getWeatherInfo}>Search</button>
         <div className="weather-info">
           <div>
             <p>
