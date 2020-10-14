@@ -60,7 +60,6 @@ form div {
 
 label {
   display: inline-block;
-  margin-bottom: 0.5rem;
 }
 
 input {
@@ -84,4 +83,10 @@ button {
   display: inline-block;
   padding: 0 1rem;
   font-size: 1.2rem;
+}
+
+span {
+  display: block;
+  padding: 0.2rem 0;
+  font-size: 1rem;
 }

@@ -7,10 +7,11 @@ function Weather() {
     country: "",
     temp: " ",
     description: "",
-    icon: "",
   });
+
+  const [errorMessage, setErrorMessage] = useState("");
   // const [weatherNow, setWeatherNow] = useState([]);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(null);
 
   const getWeatherData = (country) => {
     axios
@@ -18,16 +19,17 @@ function Weather() {
         `http://api.openweathermap.org/data/2.5/weather?q=${country}&appid=1b762a27694a99c88c292de5c5793d7d`
       )
       .then((response) => {
-        console.log(response.data);
+        let image;
+        setLoader(true);
         setWeatherInfo({
           country: response.data.name,
-          temp: Math.round(response.data.main.temp - 273),
+          temp: Math.round(response.data.main.temp - 273) + "°C",
           description: response.data.weather[0].main,
-          icon: response.data.weather[0].icon,
         });
+        setLoader(false);
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMessage("Error Loading Data...");
       });
   };
 
@@ -49,20 +51,10 @@ function Weather() {
   return (
     <div className="main-container">
       <div className="form-container">
-        <div
-          style={{ color: "white", padding: " 1.2rem 0", textAlign: "center" }}
-        >
-          <span className="display">{country}</span>
-          {/*<span className="display">{condition}</span>
-          <span className="display" style={{ textTransform: "capitalize" }}>
-            {main}
-  </span>*/}
-        </div>
         <div className="login" style={{ marginBottom: "1rem" }}>
-          <h3 style={{ color: "#000" }}>{weatherInfo.country}</h3>
-          <h3 style={{ color: "#000" }}>{weatherInfo.temp}</h3>
-          <h3 style={{ color: "#000" }}>{weatherInfo.description}</h3>
-          <h3 style={{ color: "#000" }}>{weatherInfo.icon}</h3>
+          <span style={{ color: "#000" }}>{weatherInfo.country}</span>
+          <span style={{ color: "#000" }}>{weatherInfo.temp}</span>
+          <span style={{ color: "#000" }}>{weatherInfo.description}</span>
         </div>
         <div className="login">
           <h4 style={{ color: "#000", paddingBottom: "1rem" }}>
@@ -86,6 +78,12 @@ function Weather() {
             Search
           </button>
         </div>
+        <p style={{ marginTop: "1rem" }}>
+          App by{" "}
+          <a href="https://github.com/dselasea" target="_blank">
+            Daniel Selase
+          </a>
+        </p>
       </div>
     </div>
   );

@@ -31,7 +31,7 @@ function Login() {
           <h2>Log in to the weather app</h2>
           <form className="login">
             <div>
-              <label>Name</label>
+              <label style={{ color: "black" }}>Name</label>
               <input
                 type="email"
                 placeholder="Enter Email"
@@ -40,7 +40,9 @@ function Login() {
               />
             </div>
             <div>
-              <label>Password</label>
+              <label style={{ color: "black", marginTop: ".5rem" }}>
+                Password
+              </label>
               <input
                 type="password"
                 placeholder="Enter password"
@@ -50,6 +52,12 @@ function Login() {
             </div>
             <button onClick={validateLogIn}>Log In</button>
           </form>
+          <p style={{ marginTop: "1rem" }}>
+            App by{" "}
+            <a href="https://github.com/dselasea" target="_blank">
+              Daniel Selase
+            </a>
+          </p>
         </div>
       )}
     </React.Fragment>
