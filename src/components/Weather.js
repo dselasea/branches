@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Weather() {
-  const [country, setCountry] = useState("Ghana");
+  const [country, setCountry] = useState("");
   const [weatherInfo, setWeatherInfo] = useState({
     country: "",
+    time: "",
     temp: " ",
     description: "",
+    icon: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,15 +18,16 @@ function Weather() {
   const getWeatherData = (country) => {
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/weather?q=${country}&appid=1b762a27694a99c88c292de5c5793d7d`
+        `http://api.weatherstack.com/current?access_key=099bdfffb39d0176baa0280ff5067ec0&query=${country}`
       )
       .then((response) => {
-        let image;
         setLoader(true);
         setWeatherInfo({
-          country: response.data.name,
-          temp: Math.round(response.data.main.temp - 273) + "°C",
-          description: response.data.weather[0].main,
+          country: response.data.location.name,
+          time: response.data.current.observation_time,
+          temp: response.data.current.temperature + " °C",
+          description: response.data.current.weather_descriptions,
+          icon: <img src={response.data.current.weather_icons} />,
         });
         setLoader(false);
       })
@@ -53,12 +56,16 @@ function Weather() {
       <div className="form-container">
         <div className="login" style={{ marginBottom: "1rem" }}>
           <span style={{ color: "#000" }}>{weatherInfo.country}</span>
-          <span style={{ color: "#000" }}>{weatherInfo.temp}</span>
+          <span style={{ color: "#000" }}>{weatherInfo.time}</span>
+          <span style={{ color: "#000", fontSize: "2rem" }}>
+            {weatherInfo.temp}
+          </span>
           <span style={{ color: "#000" }}>{weatherInfo.description}</span>
+          <span>{weatherInfo.icon}</span>
         </div>
         <div className="login">
           <h4 style={{ color: "#000", paddingBottom: "1rem" }}>
-            Search Location
+            Enter Location
           </h4>
           <input
             type="text"

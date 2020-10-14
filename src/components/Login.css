@@ -5,8 +5,11 @@
 }
 
 .main-container {
-  background-color: #09839f;
-  height: 100vh;
+  background: url(https://weatherstack.com/site_images/mountains.svg),
+    linear-gradient(135deg, #1f4e69 0, #164058 100%);
+  background-size: cover;
+  background-position: center;
+  color: #fff;
 }
 
 .form-container {
@@ -86,7 +89,7 @@ button {
 }
 
 span {
-  display: block;
-  padding: 0.2rem 0;
+  display: inline-block;
+  padding: 0.8rem;
   font-size: 1rem;
 }
