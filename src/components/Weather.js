@@ -10,7 +10,7 @@ function Weather() {
     description: "",
     icon: "",
   });
-
+  const [showData, setShowData] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   // const [weatherNow, setWeatherNow] = useState([]);
   const [loader, setLoader] = useState(null);
@@ -21,7 +21,7 @@ function Weather() {
         `http://api.weatherstack.com/current?access_key=099bdfffb39d0176baa0280ff5067ec0&query=${country}`
       )
       .then((response) => {
-        setLoader(true);
+        setShowData(true);
         setWeatherInfo({
           country: response.data.location.name,
           time: response.data.current.observation_time,
@@ -41,28 +41,20 @@ function Weather() {
     e.preventDefault();
   }
 
-  // Render Loading JSX
-  if (loader) {
-    return (
-      <div>
-        <h1 className="form-container" style={{ color: "white" }}>
-          Loading...
-        </h1>
-      </div>
-    );
-  }
   return (
     <div className="main-container">
       <div className="form-container">
-        <div className="login" style={{ marginBottom: "1rem" }}>
-          <span style={{ color: "#000" }}>{weatherInfo.country}</span>
-          <span style={{ color: "#000" }}>{weatherInfo.time}</span>
-          <span style={{ color: "#000", fontSize: "2rem" }}>
-            {weatherInfo.temp}
-          </span>
-          <span style={{ color: "#000" }}>{weatherInfo.description}</span>
-          <span>{weatherInfo.icon}</span>
-        </div>
+        {showData && (
+          <div className="screen" style={{ marginBottom: "1rem" }}>
+            <span style={{ color: "#000" }}>{weatherInfo.country}</span>
+            <span style={{ color: "#000" }}>{weatherInfo.time}</span>
+            <span style={{ color: "#000", fontSize: "2rem" }}>
+              {weatherInfo.temp}
+            </span>
+            <span style={{ color: "#000" }}>{weatherInfo.description}</span>
+            <span>{weatherInfo.icon}</span>
+          </div>
+        )}
         <div className="login">
           <h4 style={{ color: "#000", paddingBottom: "1rem" }}>
             Enter Location
