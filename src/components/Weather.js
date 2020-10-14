@@ -1,67 +1,38 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function Weather() {
-  const [weather, setWeather] = useState({
-    location: "",
-    city: "",
-    condition: "",
+  const [country, setCountry] = useState("Ghana");
+  const [weatherInfo, setWeatherInfo] = useState({
+    country: "",
+    temp: " ",
+    description: "",
     icon: "",
   });
-  const { location, city, condition, icon } = weather;
-  const [searchInput, setSearchInput] = useState("");
-  const [weatherNow, setWeatherNow] = useState([]);
-  const [loader, setLoader] = useState(true);
-  const [country, setCountry] = useState([]);
+  // const [weatherNow, setWeatherNow] = useState([]);
+  const [loader, setLoader] = useState(false);
 
-  useEffect(() => {
-    fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=1b762a27694a99c88c292de5c5793d7d`
-    )
+  const getWeatherData = (country) => {
+    axios
+      .get(
+        `http://api.openweathermap.org/data/2.5/weather?q=${country}&appid=1b762a27694a99c88c292de5c5793d7d`
+      )
       .then((response) => {
-        if (response.status >= 200 && response.status <= 299) {
-          return response.json();
-        } else {
-          setLoader(false);
-          throw new Error(response.statusText);
-        }
+        console.log(response.data);
+        setWeatherInfo({
+          country: response.data.name,
+          temp: Math.round(response.data.main.temp - 273),
+          description: response.data.weather[0].main,
+          icon: response.data.weather[0].icon,
+        });
       })
-      .then((data) => {
-        console.log(data);
-        setWeatherNow(data);
-        setLoader(false);
-      })
-      .catch((err) => {
-        console.log("Error Loading Data");
+      .catch((error) => {
+        console.log(error);
       });
-  }, [searchInput]);
+  };
 
-  // Get Weather Information from search input
-  function getWeatherInfo(e) {
-    if (searchInput === "") {
-      console.log("Empty");
-    } else {
-      setWeather((prevState) => {
-        return {
-          ...prevState,
-          location: weatherNow.sys.country,
-          city: weatherNow.name,
-          condition: weatherNow.weather[0]["main"],
-          icon:
-            "http://openweathermap.org/img/w/" +
-            weatherNow.weather[0]["icon"] +
-            ".png",
-        };
-      });
-    }
-    // Store Country
-    const countryList = { country: searchInput };
-    if (country.length < 5) {
-      setCountry((country) => {
-        return [...country, countryList];
-      });
-    } else {
-      return false;
-    }
+  function getInput(e) {
+    setCountry(e.target.value);
     e.preventDefault();
   }
 
@@ -69,48 +40,52 @@ function Weather() {
   if (loader) {
     return (
       <div>
-        <h1>Loading...</h1>
+        <h1 className="form-container" style={{ color: "white" }}>
+          Loading...
+        </h1>
       </div>
     );
   }
   return (
-    <div>
-      <h1>Weather App</h1>
-      <div className="weather-content">
-        <form>
+    <div className="main-container">
+      <div className="form-container">
+        <div
+          style={{ color: "white", padding: " 1.2rem 0", textAlign: "center" }}
+        >
+          <span className="display">{country}</span>
+          {/*<span className="display">{condition}</span>
+          <span className="display" style={{ textTransform: "capitalize" }}>
+            {main}
+  </span>*/}
+        </div>
+        <div className="login" style={{ marginBottom: "1rem" }}>
+          <h3 style={{ color: "#000" }}>{weatherInfo.country}</h3>
+          <h3 style={{ color: "#000" }}>{weatherInfo.temp}</h3>
+          <h3 style={{ color: "#000" }}>{weatherInfo.description}</h3>
+          <h3 style={{ color: "#000" }}>{weatherInfo.icon}</h3>
+        </div>
+        <div className="login">
+          <h4 style={{ color: "#000", paddingBottom: "1rem" }}>
+            Search Location
+          </h4>
           <input
             type="text"
             placeholder="Search Country"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            autoComplete="off"
+            value={country}
+            onChange={getInput}
           />
-        </form>
-        {searchInput === "" ? <p>Please enter a country</p> : null}
-        <button onClick={getWeatherInfo} type="submit">
-          Search
-        </button>
-        <div className="weather-info">
-          <div>
-            <p>
-              Country: <span>{location}</span>
-            </p>
-            <p>
-              City: <span>{city}</span>
-            </p>
-            <p>
-              Condition: <span>{condition}</span>
-            </p>
-            <img src={icon} alt="weather icon" />
-          </div>
+          {country === "" ? (
+            <p style={{ color: "#000" }}>Please enter a country</p>
+          ) : null}
+          <button
+            onClick={() => {
+              getWeatherData(country);
+            }}
+            type="submit"
+          >
+            Search
+          </button>
         </div>
-        {country.map((count, index) => {
-          return (
-            <div key={index}>
-              <p>{count.country}</p>
-            </div>
-          );
-        })}
       </div>
     </div>
   );

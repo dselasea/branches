@@ -23,14 +23,12 @@ function Login() {
   }
 
   return (
-    <div>
+    <React.Fragment>
       {loggedIn === true ? (
-        <div className="form-container">
-          <Weather />
-        </div>
+        <Weather />
       ) : (
         <div className="form-container">
-          <h1>Log In</h1>
+          <h2>Log in to the weather app</h2>
           <form className="login">
             <div>
               <label>Name</label>
@@ -54,7 +52,7 @@ function Login() {
           </form>
         </div>
       )}
-    </div>
+    </React.Fragment>
   );
 }
 

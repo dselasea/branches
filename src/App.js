@@ -1,6 +1,5 @@
 import React from "react";
 import Login from "./components/Login";
-import Weather from "./components/Weather";
 import "./components/Login.css";
 
 function App() {
