@@ -10,16 +10,32 @@
   background-size: cover;
   background-position: center;
   color: #fff;
+  height: 100vh;
+}
+
+.container {
+  justify-content: space-around;
+  display: flex;
+  height: 100vh;
+  padding: 3rem;
+}
+
+.history-container {
+  width: 40%;
+  background: #edf0f3;
+  padding: 2rem;
+  color: white;
+  border-radius: 5px;
+  align-self: flex-start;
 }
 
 .form-container {
-  width: 60%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
-  height: 100vh;
+  width: 40%;
+  background: #edf0f3;
+  padding: 2rem;
+  color: white;
+  border-radius: 5px;
+  align-self: flex-start;
 }
 
 /* Weather Component Styles */
@@ -36,26 +52,33 @@
   margin: 0.5rem;
 }
 
-.weather-info {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-}
-
 h2 {
   color: white;
   margin: 1rem;
   text-align: center;
 }
 
-.login {
-  width: 50%;
+.search {
+  width: 40%;
   background: #edf0f3;
-  padding: 3rem;
+  padding: 2rem;
   color: white;
   border-radius: 5px;
-  min-width: 300px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
 }
+
+.search-display {
+  width: 40%;
+  background: #edf0f3;
+  padding: 4rem 0;
+  color: white;
+  border-radius: 5px;
+  align-self: flex-start;
+  width: 100%;
+}
+
 .screen {
   width: 50%;
   padding: 3rem;
@@ -98,6 +121,8 @@ span {
   display: inline-block;
   padding: 0.8rem;
   font-size: 1rem;
+  color: black;
+  font-weight: bolder;
 }
 
 a {
